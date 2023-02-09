@@ -70,14 +70,12 @@ public class Tarjan<T extends GraphNode<?>> {
         stack.push(node);
 
         Set<T> neighbours = graph.get(node);
-        if (null != neighbours) {
-            for (T neighbour : neighbours) {
-                if (-1 == neighbour.index) {
-                    strongConnect(neighbour);
-                    node.lowLink = Math.min(node.lowLink, neighbour.lowLink);
-                } else if (neighbour.onStack) {
-                    node.lowLink = Math.min(node.lowLink, neighbour.index);
-                }
+        for (T neighbour : neighbours) {
+            if (-1 == neighbour.index) {
+                strongConnect(neighbour);
+                node.lowLink = Math.min(node.lowLink, neighbour.lowLink);
+            } else if (neighbour.onStack) {
+                node.lowLink = Math.min(node.lowLink, neighbour.index);
             }
         }
 
@@ -93,7 +91,7 @@ public class Tarjan<T extends GraphNode<?>> {
             /* 只返回非平凡的强连通分量 */
             if (1 < scc.size()) {
                 result.add(scc);
-            } else if (null != neighbours && neighbours.contains(node)) {
+            } else if (neighbours.contains(node)) {
                 /* graph中可能包含自环 */
                 result.add(scc);
             }

@@ -1,4 +1,4 @@
-package util;
+package util.dictionary;
 
 import com.google.gson.Gson;
 import com.opencsv.CSVReader;
